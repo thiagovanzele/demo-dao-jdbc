@@ -2,6 +2,8 @@ package aplicacao;
 
 import java.util.Date;
 
+import negocio.dao.FabricaDao;
+import negocio.dao.VendedorDao;
 import negocio.entidades.Departamento;
 import negocio.entidades.Vendedor;
 
@@ -14,6 +16,8 @@ public class Programa {
 		
 		Vendedor vendedor = new Vendedor(21, "Bob", "bob@gmail.com", new Date(), 3000.0, obj);
 		System.out.println(vendedor);
+		
+		VendedorDao vendedorDao = FabricaDao.criarVendedorDao();
 	}
 
 }
