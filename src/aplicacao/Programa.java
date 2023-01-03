@@ -11,6 +11,7 @@ public class Programa {
 				
 		VendedorDao vendedorDao = FabricaDao.criarVendedorDao();
 		
+		System.out.println("=== TEST 1: vendedor filtrarPorId ===");
 		Vendedor vendedor = vendedorDao.filtrarPorId(3);
 		
 		System.out.println(vendedor);
