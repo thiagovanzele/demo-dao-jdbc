@@ -1,7 +1,10 @@
 package aplicacao;
 
+import java.util.List;
+
 import negocio.dao.FabricaDao;
 import negocio.dao.VendedorDao;
+import negocio.entidades.Departamento;
 import negocio.entidades.Vendedor;
 
 public class Programa {
@@ -15,6 +18,14 @@ public class Programa {
 		Vendedor vendedor = vendedorDao.filtrarPorId(3);
 		
 		System.out.println(vendedor);
+		
+		System.out.println("\n=== TEST 2: vendedor filtrarPorDepartamento ===");
+		Departamento departamento = new Departamento(2, null);
+		List<Vendedor> list = vendedorDao.filtrarPorDepartamento(departamento);
+		for (Vendedor obj : list) {
+			System.out.println(obj);
+		}
+
 	}
 
 }
