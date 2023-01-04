@@ -33,10 +33,17 @@ public class Programa {
 			System.out.println(obj);
 		}
 		
-		System.out.println("\n=== TEST 4: vendedor inserir ===");
+		/*System.out.println("\n=== TEST 4: vendedor inserir ===");
 		Vendedor novoVendedor = new Vendedor(null, "Greg", "greg@gmail.com", new Date(), 4000.0, departamento);
 		vendedorDao.inserir(novoVendedor);
-		System.out.println("Inserido!  Novo id = " + novoVendedor.getId());
+		System.out.println("Inserido!  Novo id = " + novoVendedor.getId());*/
+		
+		System.out.println("\n=== TEST 5: vendedor atualizar ===");
+		vendedor = vendedorDao.filtrarPorId(1);
+		vendedor.setNome("Marta Waine");
+		vendedor.setEmail("marta@gmail.com");
+		vendedorDao.atualizar(vendedor);
+		System.out.println("Vendedor atualizado!");
 
 	}
 
