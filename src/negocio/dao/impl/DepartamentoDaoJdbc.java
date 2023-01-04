@@ -75,20 +75,65 @@ public class DepartamentoDaoJdbc implements DepartamentoDao {
 
 	@Override
 	public void deletePorId(Integer id) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("DELETE FROM department " + "WHERE Id = ?");
+
+			st.setInt(1, id);
+
+			int linhasAfetadas = st.executeUpdate();
+
+			if (linhasAfetadas == 0) {
+				throw new DbException("Delete incompleto! O Id nao existe!");
+			} else {
+				System.out.println("Delete completo!");
+			}
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+		}
 
 	}
 
 	@Override
 	public Departamento filtrarPorId(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"SELECT id, Name as DepName "
+					+ "FROM department "
+					+ "WHERE id = ?"); 
+
+			st.setInt(1, id);
+
+			rs = st.executeQuery();
+			if (rs.next()) {
+				Departamento dep = instanciarDepartamento(rs);
+				return dep;
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+
 	}
 
 	@Override
 	public List<Departamento> filtrarTodos() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	private Departamento instanciarDepartamento(ResultSet rs) throws SQLException {
+		Departamento dep = new Departamento();
+		dep.setId(rs.getInt("Id"));
+		dep.setNome(rs.getString("DepName"));
+		return dep;
 	}
 
 }
