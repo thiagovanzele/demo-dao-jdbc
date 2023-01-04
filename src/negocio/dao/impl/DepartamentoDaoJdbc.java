@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import db.DB;
@@ -80,6 +81,7 @@ public class DepartamentoDaoJdbc implements DepartamentoDao {
 			st = conn.prepareStatement("DELETE FROM department " + "WHERE Id = ?");
 
 			st.setInt(1, id);
+			
 
 			int linhasAfetadas = st.executeUpdate();
 
@@ -101,10 +103,7 @@ public class DepartamentoDaoJdbc implements DepartamentoDao {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement(
-					"SELECT id, Name as DepName "
-					+ "FROM department "
-					+ "WHERE id = ?"); 
+			st = conn.prepareStatement("SELECT id, Name as DepName " + "FROM department " + "WHERE id = ?");
 
 			st.setInt(1, id);
 
@@ -125,8 +124,26 @@ public class DepartamentoDaoJdbc implements DepartamentoDao {
 
 	@Override
 	public List<Departamento> filtrarTodos() {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+
+		try {
+			st = conn.prepareStatement("SELECT id, Name as DepName " + "FROM department");
+
+			rs = st.executeQuery();
+
+			List<Departamento> list = new ArrayList<>();
+			while (rs.next()) {
+				Departamento dep = instanciarDepartamento(rs);
+				list.add(dep);
+			}
+			return list;
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeResultSet(rs);
+			DB.closeStatement(st);
+		}
 	}
 
 	private Departamento instanciarDepartamento(ResultSet rs) throws SQLException {
