@@ -62,20 +62,18 @@ public class VendedorDaoJdbc implements VendedorDao {
 	public void atualizar(Vendedor obj) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement(
-					"UPDATE seller "
-					+ "SET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ? "
-					+ "WHERE Id = ?");
-			
+			st = conn.prepareStatement("UPDATE seller "
+					+ "SET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ? " + "WHERE Id = ?");
+
 			st.setString(1, obj.getNome());
 			st.setString(2, obj.getEmail());
 			st.setDate(3, new java.sql.Date(obj.getNascimento().getTime()));
 			st.setDouble(4, obj.getSalarioBase());
 			st.setInt(5, obj.getDepartamento().getId());
 			st.setInt(6, obj.getId());
-			
+
 			st.executeUpdate();
-					
+
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
 		} finally {
@@ -85,7 +83,23 @@ public class VendedorDaoJdbc implements VendedorDao {
 
 	@Override
 	public void deletePorId(Integer id) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("DELETE FROM seller " + "WHERE id = ?");
+
+			st.setInt(1, id);
+
+			int linhasAfetadas = st.executeUpdate();
+			
+			if (linhasAfetadas == 0) {
+				throw new DbException("O id selecionado nao existe!");
+			}
+			
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+		}
 
 	}
 
