@@ -25,6 +25,12 @@ public class Programa {
 		for (Vendedor obj : list) {
 			System.out.println(obj);
 		}
+		
+		System.out.println("\n=== TEST 3: vendedor filtrarTudo ===");
+		list = vendedorDao.filtrarTodos();
+		for (Vendedor obj : list) {
+			System.out.println(obj);
+		}
 
 	}
 
