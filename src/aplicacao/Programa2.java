@@ -10,10 +10,15 @@ public class Programa2 {
 		
 		DepartamentoDao departamentoDao = FabricaDao.criarDepartamentoDao();
 
-		System.out.println("\n === TESTE 1: departamento inserir ===");
+		System.out.println("=== TESTE 1: departamento inserir ===");
 		Departamento dep = new Departamento(null, "Foods");
 		departamentoDao.inserir(dep);
-		System.out.println("Departamento " + dep.getNome() + " inserio!");
+		System.out.println("Departamento " + dep.getNome() + " inserido!");
+		
+		System.out.println("\n=== TESTE 2: departamento atualizar ===");
+		dep.setNome("Fruits");
+		dep.setId(7);
+		departamentoDao.atualizar(dep);
 	}
 
 }

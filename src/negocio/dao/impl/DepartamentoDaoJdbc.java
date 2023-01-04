@@ -51,7 +51,25 @@ public class DepartamentoDaoJdbc implements DepartamentoDao {
 
 	@Override
 	public void atualizar(Departamento obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("UPDATE department " + "SET Name = ? " + "WHERE id = ?");
+
+			st.setString(1, obj.getNome());
+			st.setInt(2, obj.getId());
+
+			int linhasAfetadas = st.executeUpdate();
+
+			if (linhasAfetadas == 0) {
+				throw new DbException("Erro inesperado! Atualizacao nao concluida!");
+			} else {
+				System.out.println("Atualizacao concluida!");
+			}
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+		}
 
 	}
 
